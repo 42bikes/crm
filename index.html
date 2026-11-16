@@ -218,6 +218,106 @@
 .has-site-badge{background:#d1fae5;color:#047857;font-weight:600;padding:3px 8px;border-radius:12px;font-size:.7rem;}
 .shortcuts-modal kbd{background:#f1f5f9;border:1px solid #cbd5e1;border-radius:4px;padding:2px 6px;font-size:.75rem;}
 [data-theme="dark"] .shortcuts-modal kbd{background:#0f172a;border-color:#475569;}
+
+/* ===== RESPONSIVE IMPROVEMENTS ===== */
+/* Mobile (max 576px) */
+@media (max-width:576px) {
+  .hero h1 { font-size: 1.5rem; }
+  .content-area { padding: 12px; }
+  .top-bar { padding: 8px 12px; }
+  .top-bar h5 { font-size: 1rem; }
+  .stat-card .stat-value { font-size: 1.8rem; }
+  .stat-card { padding: 16px 10px; }
+  .card { border-radius: 12px; }
+  .table { font-size: 0.75rem; }
+  .table th, .table td { padding: 6px 4px; }
+  .btn-sm { font-size: 0.75rem; padding: 4px 8px; }
+  .fab { width: 48px; height: 48px; font-size: 1.3rem; bottom: 20px; right: 20px; }
+  .modal-dialog { margin: 0.5rem; }
+  .modal-body { max-height: 60vh; }
+  .search-wrapper input { width: 140px !important; }
+  .filter-chip { font-size: 0.7rem; padding: 3px 10px; }
+  .kanban-card { padding: 8px; }
+  .kanban-card .card-title { font-size: 0.8rem; }
+  .doc-card { padding: 12px; }
+  .doc-card .doc-icon { font-size: 1.8rem; }
+  .template-card { padding: 10px; }
+  .reminder-item { padding: 8px; }
+}
+
+/* Tablet (577px - 768px) */
+@media (min-width:577px) and (max-width:768px) {
+  .content-area { padding: 18px; }
+  .stat-card .stat-value { font-size: 2rem; }
+  .table { font-size: 0.8rem; }
+}
+
+/* Mobile sidebar overlay */
+@media (max-width:992px) {
+  .sidebar { box-shadow: 0 0 40px rgba(0,0,0,.5); }
+  .sidebar.show { transform: translateX(0); }
+  .main-content { margin-left: 0; }
+  .top-bar { padding: 10px 15px; }
+}
+
+/* Touch-friendly targets */
+@media (pointer: coarse) {
+  .btn { min-height: 44px; }
+  .nav-item { min-height: 44px; }
+  .kanban-card { cursor: pointer; }
+  input, select, textarea { font-size: 16px !important; } /* Prevent zoom on iOS */
+}
+
+/* Smooth scrolling on mobile */
+@media (max-width: 768px) {
+  .modal-body { -webkit-overflow-scrolling: touch; }
+  .content-area { -webkit-overflow-scrolling: touch; }
+}
+
+/* Bottom nav for mobile */
+.mobile-bottom-nav { display: none; }
+@media (max-width: 768px) {
+  .mobile-bottom-nav {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #fff;
+    border-top: 1px solid #e2e8f0;
+    z-index: 999;
+    padding: 4px 0;
+    box-shadow: 0 -2px 10px rgba(0,0,0,.1);
+  }
+  .mobile-bottom-nav a {
+    flex: 1;
+    text-align: center;
+    padding: 6px 2px;
+    color: #64748b;
+    text-decoration: none;
+    font-size: 0.65rem;
+  }
+  .mobile-bottom-nav a.active { color: #6366f1; }
+  .mobile-bottom-nav a i { font-size: 1.2rem; display: block; margin-bottom: 2px; }
+  .main-content { padding-bottom: 60px; }
+}
+
+/* Improve table on mobile */
+@media (max-width: 768px) {
+  .table-responsive { border: 0; }
+  .leads-table-mobile { display: block; }
+}
+
+/* Better modal on mobile */
+@media (max-width: 576px) {
+  .modal-dialog { margin: 0; max-width: 100%; }
+  .modal-content { border-radius: 0; min-height: 100vh; }
+}
+
+/* Login screen mobile */
+@media (max-width: 576px) {
+  #loginScreen > div { padding: 24px; margin: 16px; }
+}
 </style>
 
 <!-- PWA -->
@@ -778,5 +878,14 @@ if ('serviceWorker' in navigator) {
   });
 }
 </script>
+
+<!-- Mobile Bottom Nav -->
+<div class="mobile-bottom-nav">
+  <a href="#" onclick="showView('dashboard', this); return false;"><i class="bi bi-speedometer2"></i>Home</a>
+  <a href="#" onclick="showView('leads', this); return false;"><i class="bi bi-people"></i>Leads</a>
+  <a href="#" onclick="showView('pipeline', this); return false;"><i class="bi bi-kanban"></i>Pipeline</a>
+  <a href="#" onclick="showView('approaches', this); return false;"><i class="bi bi-send"></i>Abord.</a>
+  <a href="#" onclick="showView('brandkit', this); return false;"><i class="bi bi-palette"></i>Brand</a>
+</div>
 </body>
 </html>
