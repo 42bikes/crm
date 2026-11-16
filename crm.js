@@ -233,14 +233,8 @@ function showShortcuts() {
   new bootstrap.Modal(document.getElementById('shortcutsModal')).show();
 }
 
-// ===== INIT =====
-(async function() {
-  loadData();
-  await autoLoadCSV();
-  renderDashboard();
-  populateGrupoFilter();
-  renderLeads();
-})();
+// ===== INIT (handled by login) =====
+// Initialization is done in showCRM() after login
 
 
 
@@ -1316,3 +1310,93 @@ function renderApproaches() {
 
   renderApproachHistory();
 }
+
+// ===== LOGIN =====
+const LOGIN_USER = 'Itacaraio';
+const LOGIN_PASS = 'itacaré';
+const SESSION_KEY = 'crm_itacare_session_v7';
+
+function checkSession() {
+  const session = localStorage.getItem(SESSION_KEY);
+  if (session === 'authenticated') {
+    showCRM();
+  } else {
+    showLogin();
+  }
+}
+
+function doLogin() {
+  const user = document.getElementById('loginUser').value.trim();
+  const pass = document.getElementById('loginPass').value;
+  const errorEl = document.getElementById('loginError');
+
+  if (user === LOGIN_USER && pass === LOGIN_PASS) {
+    localStorage.setItem(SESSION_KEY, 'authenticated');
+    showCRM();
+    showToast('Bem-vindo, ' + user + '!', 'success');
+  } else {
+    errorEl.style.display = 'block';
+    errorEl.textContent = 'Usuário ou senha incorretos.';
+    document.getElementById('loginPass').value = '';
+    document.getElementById('loginPass').focus();
+  }
+}
+
+function doLogout() {
+  localStorage.removeItem(SESSION_KEY);
+  showLogin();
+  showToast('Logout realizado.', 'info');
+}
+
+function showLogin() {
+  var ls = document.getElementById('loginScreen');
+  var sb = document.getElementById('sidebar');
+  var mc = document.getElementById('mainContent');
+  if (ls) ls.style.display = 'flex';
+  if (sb) sb.style.display = 'none';
+  if (mc) mc.style.display = 'none';
+}
+
+function showCRM() {
+  var ls = document.getElementById('loginScreen');
+  var sb = document.getElementById('sidebar');
+  var mc = document.getElementById('mainContent');
+  if (ls) ls.style.display = 'none';
+  if (sb) sb.style.display = 'flex';
+  if (mc) mc.style.display = 'block';
+  // Init CRM if not already
+  if (!window._crmInitialized) {
+    window._crmInitialized = true;
+    loadData();
+    autoLoadCSV().then(() => {
+      renderDashboard();
+      populateGrupoFilter();
+      renderLeads();
+    });
+  }
+}
+
+// Add logout button to sidebar footer
+(function() {
+  const footer = document.querySelector('.sidebar-footer');
+  if (footer) {
+    const logoutBtn = document.createElement('button');
+    logoutBtn.className = 'btn btn-sm btn-outline-light mt-2 w-100';
+    logoutBtn.style.fontSize = '0.75rem';
+    logoutBtn.innerHTML = '<i class="bi bi-box-arrow-right me-1"></i>Sair';
+    logoutBtn.onclick = doLogout;
+    footer.appendChild(logoutBtn);
+  }
+})();
+
+// Check session on load (instead of auto-init)
+// Remove the auto-init at the bottom by overriding
+
+// Login screen is visible by default in HTML; no need to call showLogin on load
+
+// Auto-login if session exists
+setTimeout(function() {
+  if (localStorage.getItem('crm_itacare_session_v7') === 'authenticated') {
+    showCRM();
+  }
+}, 500);
