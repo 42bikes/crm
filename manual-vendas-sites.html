@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Manual de Vendas de Sites - Itacaré</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--primary:#6366f1;--primary-dark:#4f46e5;--accent:#06b6d4;--success:#10b981;--warning:#f59e0b;--danger:#f43f5e;--bg:#f0f4f8;--card-bg:#ffffff;--text:#1e293b;--text-muted:#64748b;--border:#e2e8f0;}
+*{box-sizing:border-box;}body{background:var(--bg);font-family:'Inter',system-ui,sans-serif;margin:0;color:var(--text);}
+.hero{background:linear-gradient(135deg,#0f0a2e 0%,#1e1b4b 30%,#312e81 70%,#4338ca 100%);color:#fff;padding:60px 0;text-align:center;}
+.hero h1{font-size:2.5rem;font-weight:800;margin-bottom:12px;}
+.hero p{font-size:1.1rem;opacity:0.85;max-width:700px;margin:0 auto;}
+.hero .badge{font-size:0.9rem;padding:8px 16px;margin-top:20px;}
+.section{padding:50px 0;}
+.section-title{font-size:1.8rem;font-weight:700;margin-bottom:8px;color:var(--primary-dark);}
+.section-subtitle{color:var(--text-muted);margin-bottom:30px;font-size:1.05rem;}
+.card{border:none;box-shadow:0 1px 3px rgba(0,0,0,.04),0 4px 12px rgba(0,0,0,.04);border-radius:16px;background:var(--card-bg);margin-bottom:20px;}
+.card-header{border-radius:16px 16px 0 0 !important;font-weight:600;border-bottom:1px solid var(--border);padding:14px 20px;}
+.step-number{width:40px;height:40px;border-radius:50%;background:var(--primary);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1.1rem;flex-shrink:0;}
+.script-box{background:#f8fafc;border:1px solid var(--border);border-radius:10px;padding:16px;margin:12px 0;font-size:0.9rem;line-height:1.6;}
+.script-box .label{font-weight:600;color:var(--primary-dark);margin-bottom:6px;}
+.script-box .wa{color:#22c55e;font-weight:600;}
+.objection{border-left:4px solid var(--danger);padding:12px 16px;margin:10px 0;background:#fef2f2;border-radius:0 8px 8px 0;}
+.objection .q{font-weight:600;color:var(--danger-dark);}
+.objection .a{color:var(--text);margin-top:6px;}
+.checklist li{padding:8px 0;border-bottom:1px solid var(--border);list-style:none;}
+.checklist li::before{content:"\2610";margin-right:8px;color:var(--primary);}
+.price-card{border:2px solid var(--border);border-radius:12px;padding:24px;text-align:center;transition:all .2s;}
+.price-card:hover{border-color:var(--primary);transform:translateY(-4px);box-shadow:0 8px 20px rgba(99,102,241,.1);}
+.price-card.featured{border-color:var(--primary);background:linear-gradient(135deg,#eef2ff,#e0e7ff);}
+.price-card .price{font-size:2.5rem;font-weight:800;color:var(--primary);}
+.price-card .period{color:var(--text-muted);font-size:0.9rem;}
+.niche-card{background:var(--card-bg);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:16px;}
+.niche-card h5{color:var(--primary-dark);font-weight:600;}
+.niche-card .opportunity{background:#fef2f2;color:var(--danger);padding:4px 10px;border-radius:6px;font-size:0.8rem;font-weight:600;display:inline-block;margin-bottom:8px;}
+.funnel{display:flex;flex-direction:column;gap:8px;}
+.funnel-step{display:flex;align-items:center;gap:12px;padding:10px 16px;border-radius:8px;background:var(--card-bg);border:1px solid var(--border);}
+.funnel-step .num{width:32px;height:32px;border-radius:50%;background:var(--primary);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.85rem;flex-shrink:0;}
+.sidebar-nav{position:sticky;top:20px;}
+.sidebar-nav a{display:block;padding:8px 12px;color:var(--text-muted);text-decoration:none;border-left:3px solid transparent;transition:all .2s;font-size:0.9rem;}
+.sidebar-nav a:hover{color:var(--primary);border-left-color:var(--primary);}
+.sidebar-nav a.active{color:var(--primary);border-left-color:var(--primary);font-weight:600;}
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;}
+.kpi{background:var(--card-bg);border:1px solid var(--border);border-radius:12px;padding:20px;text-align:center;}
+.kpi .value{font-size:2rem;font-weight:800;color:var(--primary);}
+.kpi .label{font-size:0.8rem;color:var(--text-muted);margin-top:4px;}
+@media (max-width:768px){.hero h1{font-size:1.8rem;}.sidebar-nav{position:static;margin-bottom:20px;}}
+</style>
+</head>
+<body>
+
+<!-- Hero -->
+<div class="hero">
+  <div class="container">
+    <h1><i class="bi bi-bullseye me-2"></i>Manual de Vendas de Sites</h1>
+    <p>Guia completo para vender websites para negócios de Itacaré (BA). Do primeiro contato ao fechamento.</p>
+    <span class="badge bg-warning text-dark"><i class="bi bi-star-fill me-1"></i>Para vendedores iniciantes</span>
+  </div>
+</div>
+
+<div class="container-fluid">
+  <div class="row">
+    <!-- Sidebar -->
+    <div class="col-lg-3 d-none d-lg-block">
+      <div class="sidebar-nav mt-4">
+        <a href="#oportunidade">1. A Oportunidade</a>
+        <a href="#mercado">2. O Mercado de Itacaré</a>
+        <a href="#processo">3. Processo de Venda</a>
+        <a href="#scripts">4. Scripts de Abordagem</a>
+        <a href="#objecoes">5. Tratamento de Objeções</a>
+        <a href="#precos">6. Tabela de Preços</a>
+        <a href="#nichos">7. Abordagem por Nicho</a>
+        <a href="#followup">8. Follow-up e Cadência</a>
+        <a href="#crm">9. Usando o CRM</a>
+        <a href="#checklist">10. Checklist Diário</a>
+        <a href="#kpis">11. KPIs e Metas</a>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="col-lg-9">
+      <div class="section" id="oportunidade">
+        <h2 class="section-title">1. A Oportunidade</h2>
+        <p class="section-subtitle">Por que vender sites em Itacaré é uma mina de ouro</p>
+
+        <div class="kpi-grid mb-4">
+          <div class="kpi"><div class="value">844</div><div class="label">Negócios listados</div></div>
+          <div class="kpi"><div class="value">229</div><div class="label">Leads no CRM</div></div>
+          <div class="kpi"><div class="value">79.5%</div><div class="label">Sem site (oportunidade)</div></div>
+          <div class="kpi"><div class="value">182</div><div class="label">Leads sem site</div></div>
+        </div>
+
+        <div class="card">
+          <div class="card-body">
+            <h5><i class="bi bi-lightbulb me-2 text-warning"></i>O que isso significa?</h5>
+            <p>De cada 10 negócios em Itacaré, <strong>8 não têm site próprio</strong>. Isso significa que:</p>
+            <ul>
+              <li>Eles dependem de Instagram, WhatsApp e OTAs (Booking, Airbnb) para existir online</li>
+              <li>Eles perdem clientes que buscam no Google ("pousada em Itacaré", "restaurante Itacaré")</li>
+              <li>Eles não têm controle sobre sua presença digital</li>
+              <li>Eles não podem receber reservas/pedidos diretamente (pagam comissão para OTAs)</li>
+            </ul>
+            <p class="mb-0"><strong>Sua missão:</strong> Mostrar a eles que um site profissional é um investimento que se paga em semanas, não em anos.</p>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-body">
+            <h5><i class="bi bi-graph-up me-2 text-success"></i>O que um site traz para o negócio?</h5>
+            <div class="row">
+              <div class="col-md-6">
+                <ul>
+                  <li><strong>Visibilidade no Google</strong> — aparece quando alguém busca "pousada Itacaré"</li>
+                  <li><strong>Reservas diretas</strong> — sem pagar 15-25% de comissão para OTAs</li>
+                  <li><strong>Credibilidade</strong> — negócio profissional, não amador</li>
+                  <li><strong>Funciona 24/7</strong> — atende clientes enquanto dorme</li>
+                </ul>
+              </div>
+              <div class="col-md-6">
+                <ul>
+                  <li><strong>Controle total</strong> — não depende do algoritmo do Instagram</li>
+                  <li><strong>Dados dos clientes</strong> — captura emails e telefones</li>
+                  <li><strong>Marketing</strong> — pode rodar anúncios para o próprio site</li>
+                  <li><strong>Escalabilidade</strong> — vende mais sem aumentar custos</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section" id="mercado">
+        <h2 class="section-title">2. O Mercado de Itacaré</h2>
+        <p class="section-subtitle">Conheça os negócios e suas dores</p>
+
+        <div class="row">
+          <div class="col-md-6">
+            <div class="niche-card">
+              <span class="opportunity">71 sem site</span>
+              <h5><i class="bi bi-house-door me-2"></i>Hospedagem (Pousadas/Hotéis)</h5>
+              <p class="small text-muted">89 leads no CRM. 71 sem site (79.8%). Google Maps com até 2.243 reviews.</p>
+              <p class="small"><strong>Dor principal:</strong> Dependem de Booking/Airbnb (pagam 15-25% comissão). Perdem reservas diretas.</p>
+              <p class="small"><strong>Solução:</strong> Site com reservas online + Google Business Profile otimizado.</p>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="niche-card">
+              <span class="opportunity">47 sem site</span>
+              <h5><i class="bi bi-cup-straw me-2"></i>Bares & Restaurantes</h5>
+              <p class="small text-muted">63 leads no CRM. 47 sem site (74.6%). Google Maps com até 1.032 reviews.</p>
+              <p class="small"><strong>Dor principal:</strong> Cardápio impresso, sem delivery próprio, dependem de iFood.</p>
+              <p class="small"><strong>Solução:</strong> Site com cardápio digital, pedidos online, reservas de mesa.</p>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="niche-card">
+              <span class="opportunity">18 sem site</span>
+              <h5><i class="bi bi-bag me-2"></i>Comércio</h5>
+              <p class="small text-muted">23 leads no CRM. 18 sem site (78.3%).</p>
+              <p class="small"><strong>Dor principal:</strong> Sem loja online, vendem só no balcão/Instagram.</p>
+              <p class="small"><strong>Solução:</strong> E-commerce, catálogo online, Instagram Shopping.</p>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="niche-card">
+              <span class="opportunity">22 sem site</span>
+              <h5><i class="bi bi-tools me-2"></i>Serviços</h5>
+              <p class="small text-muted">30 leads no CRM. 22 sem site (73.3%).</p>
+              <p class="small"><strong>Dor principal:</strong> Sem agendamento online, sem portfólio digital.</p>
+              <p class="small"><strong>Solução:</strong> Site com agendamento, portfólio, formulário de contato.</p>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="niche-card">
+              <span class="opportunity">8 sem site</span>
+              <h5><i class="bi bi-house me-2"></i>Imóveis</h5>
+              <p class="small text-muted">10 leads no CRM. 8 sem site (80%).</p>
+              <p class="small"><strong>Dor principal:</strong> Sem busca de imóveis online, perdem leads.</p>
+              <p class="small"><strong>Solução:</strong> Site com busca de imóveis, formulário de interesse.</p>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="niche-card">
+              <span class="opportunity">16 sem site</span>
+              <h5><i class="bi bi-water me-2"></i>Esportes & Passeios</h5>
+              <p class="small text-muted">24 leads no CRM. 16 sem site (66.7%).</p>
+              <p class="small"><strong>Dor principal:</strong> Sem reservas online, dependem de WhatsApp.</p>
+              <p class="small"><strong>Solução:</strong> Site com reservas online, galeria de fotos, depoimentos.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section" id="processo">
+        <h2 class="section-title">3. Processo de Venda (5 passos)</h2>
+        <p class="section-subtitle">Do lead frio ao fechamento</p>
+
+        <div class="funnel">
+          <div class="funnel-step"><div class="num">1</div><div><strong>Prospecção</strong> — Encontrar o lead no CRM (filtro "Sem site"), verificar Google Maps, Instagram</div></div>
+          <div class="funnel-step"><div class="num">2</div><div><strong>Primeiro contato</strong> — WhatsApp ou Instagram. Usar script do CRM. Mencionar reviews do Google.</div></div>
+          <div class="funnel-step"><div class="num">3</div><div><strong>Diagnóstico</strong> — Perguntar: "Vocês recebem reservas diretas ou dependem de OTAs?" / "Já tentaram ter site?"</div></div>
+          <div class="funnel-step"><div class="num">4</div><div><strong>Proposta</strong> — Apresentar o site modelo do nicho. Mostrar paleta de cores (BrandKit). Dar preço.</div></div>
+          <div class="funnel-step"><div class="num">5</div><div><strong>Fechamento</strong> — "Posso começar essa semana?" / "Preciso de 50% para iniciar." Follow-up.</div></div>
+        </div>
+
+        <div class="card mt-4">
+          <div class="card-header bg-primary text-white"><i class="bi bi-clock me-2"></i>Tempo médio por etapa</div>
+          <div class="card-body">
+            <table class="table table-sm mb-0">
+              <thead><tr><th>Etapa</th><th>Tempo</th><th>Ação no CRM</th></tr></thead>
+              <tbody>
+                <tr><td>Prospecção</td><td>5 min/lead</td><td>Filtrar "Sem site", abrir ficha</td></tr>
+                <tr><td>Primeiro contato</td><td>2 min/lead</td><td>WhatsApp com script do CRM</td></tr>
+                <tr><td>Diagnóstico</td><td>10-15 min</td><td>Ligar ou responder no WhatsApp</td></tr>
+                <tr><td>Proposta</td><td>30 min</td><td>Enviar modelo + preço via WhatsApp</td></tr>
+                <tr><td>Fechamento</td><td>1-7 dias</td><td>Follow-up (2, 5, 10, 15 dias)</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="section" id="scripts">
+        <h2 class="section-title">4. Scripts de Abordagem</h2>
+        <p class="section-subtitle">Copie e cole. Personalize o [NOME].</p>
+
+        <div class="card">
+          <div class="card-header bg-success text-white"><i class="bi bi-whatsapp me-2"></i>Script 1: Primeiro Contato (WhatsApp)</div>
+          <div class="card-body">
+            <div class="script-box">
+              <div class="label">Para pousadas/hospedagem:</div>
+              <p>"Olá! Vi que vocês gerenciam a <strong>[NOME]</strong> em Itacaré. Vi também que tem <strong>X reviews no Google</strong> (ótima avaliação!). Trabalho com soluções digitais para hospedagem (site, reservas online, gestão de propriedades). Gostaria de saber se faz sentido conversarmos sobre como aumentar a visibilidade e automatizar reservas?"</p>
+            </div>
+            <div class="script-box">
+              <div class="label">Para restaurantes:</div>
+              <p>"Olá! Vi que vocês têm o <strong>[NOME]</strong> em Itacaré. Vi também que tem <strong>X reviews no Google</strong> (ótima avaliação!). Trabalho com soluções digitais para restaurantes (cardápio digital, delivery, marketing). Faz sentido conversarmos?"</p>
+            </div>
+            <div class="script-box">
+              <div class="label">Para comércio:</div>
+              <p>"Olá! Vi que vocês têm o <strong>[NOME]</strong> em Itacaré. Trabalho com soluções digitais para comércio (e-commerce, gestão de estoque, marketing). Faz sentido conversarmos sobre como aumentar vendas online?"</p>
+            </div>
+            <div class="script-box">
+              <div class="label">Para serviços:</div>
+              <p>"Olá! Vi que vocês têm o <strong>[NOME]</strong> em Itacaré. Vi também que tem ótimas avaliações no Google! Trabalho com soluções digitais (agendamento online, marketing, gestão de clientes). Faz sentido conversarmos?"</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header bg-warning text-dark"><i class="bi bi-arrow-repeat me-2"></i>Script 2: Follow-up (2-5 dias depois)</div>
+          <div class="card-body">
+            <div class="script-box">
+              <p>"Oi! Sei que deve estar ocupado(a). Só queria deixar uma dica: muitos <strong>[nicho]</strong> em Itacaré estão <strong>perdendo clientes</strong> por não terem site próprio. Posso mostrar como funciona? Sem compromisso!"</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header bg-info text-white"><i class="bi bi-star me-2"></i>Script 3: Caso de Sucesso</div>
+          <div class="card-body">
+            <div class="script-box">
+              <p>"Olá! Um cliente nosso em <strong>cidade similar</strong> aumentou reservas diretas em <strong>40%</strong> com site próprio + Google Business Profile otimizado. Faz sentido para vocês? Posso mostrar como."</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header bg-danger text-white"><i class="bi bi-exclamation-triangle me-2"></i>Script 4: Oferta de Site (para quem não tem)</div>
+          <div class="card-body">
+            <div class="script-box">
+              <p>"Olá! Vi que vocês têm o <strong>[NOME]</strong> em Itacaré mas <strong>não têm site próprio</strong>. Um site profissional aumenta a visibilidade no Google, traz reservas diretas (sem depender de OTAs) e funciona como cartão de visitas 24/7. Posso mostrar como funciona? Sem compromisso!"</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section" id="objecoes">
+        <h2 class="section-title">5. Tratamento de Objeções</h2>
+        <p class="section-subtitle">Respostas prontas para as objeções mais comuns</p>
+
+        <div class="objection">
+          <div class="q">"Já tenho Instagram, não preciso de site."</div>
+          <div class="a"><strong>Resposta:</strong> "O Instagram é ótimo para engajamento, mas o algoritmo muda e você não controla quem vê. Um site aparece no Google quando alguém busca 'pousada em Itacaré' — e essas pessoas estão prontas para reservar. Além disso, no site você captura o contato do cliente (email/WhatsApp) para remarketing. O Instagram não dá isso."</div>
+        </div>
+        <div class="objection">
+          <div class="q">"É muito caro."</div>
+          <div class="a"><strong>Resposta:</strong> "Entendo. Mas pense: uma única reserva direta (sem pagar 15-25% de comissão para Booking/Airbnb) já cobre parte do investimento. E o site trabalha para você 24/7, 365 dias por ano. Qual seria o valor de uma reserva a mais por mês?"</div>
+        </div>
+        <div class="objection">
+          <div class="q">"Não tenho tempo para gerenciar um site."</div>
+          <div class="a"><strong>Resposta:</strong> "O site é autogerenciável — você atualiza fotos e textos pelo celular. E se preferir, eu mesmo faço as atualizações por um valor mensal acessível. Você não precisa se preocupar com nada técnico."</div>
+        </div>
+        <div class="objection">
+          <div class="q">"Já tentei ter site e não deu certo."</div>
+          <div class="a"><strong>Resposta:</strong> "O que aconteceu? Provavelmente o site não era otimizado para Google ou não tinha reservas online. Vou mostrar como o nosso é diferente: aparece no Google, recebe reservas diretas e é mobile-first (80% dos clientes acessam pelo celular)."</div>
+        </div>
+        <div class="objection">
+          <div class="q">"Vou pensar e te respondo."</div>
+          <div class="a"><strong>Resposta:</strong> "Claro! Só uma pergunta: o que especificamente você quer pensar? É o preço, o timing ou a necessidade? Assim posso te ajudar melhor." (Se não responder, follow-up em 3 dias.)</div>
+        </div>
+        <div class="objection">
+          <div class="q">"Meu sobrinho faz site de graça."</div>
+          <div class="a"><strong>Resposta:</strong> "Que legal! Mas um site profissional não é só design — é SEO (aparecer no Google), segurança, velocidade, reservas online e suporte. Seu sobrinho consegue entregar tudo isso? Se sim, ótimo! Se não, posso mostrar a diferença."</div>
+        </div>
+      </div>
+
+      <div class="section" id="precos">
+        <h2 class="section-title">6. Tabela de Preços</h2>
+        <p class="section-subtitle">Sugestão de preços para o mercado de Itacaré</p>
+
+        <div class="row">
+          <div class="col-md-4">
+            <div class="price-card">
+              <h5>Básico</h5>
+              <div class="price">R$ 800</div>
+              <div class="period">pagamento único</div>
+              <hr>
+              <ul class="text-start small">
+                <li>Site institucional (5 páginas)</li>
+                <li>Design responsivo (mobile)</li>
+                <li>Formulário de contato</li>
+                <li>Google Business Profile</li>
+                <li>1 revisão</li>
+              </ul>
+              <p class="small text-muted mt-2">Ideal para: comércio, serviços</p>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="price-card featured">
+              <h5>Profissional</h5>
+              <div class="price">R$ 1.500</div>
+              <div class="period">pagamento único</div>
+              <hr>
+              <ul class="text-start small">
+                <li>Tudo do Básico</li>
+                <li>Reservas online (pousadas)</li>
+                <li>Cardápio digital (restaurantes)</li>
+                <li>Galeria de fotos</li>
+                <li>Integração WhatsApp</li>
+                <li>2 revisões</li>
+                <li>30 dias de suporte</li>
+              </ul>
+              <p class="small text-muted mt-2">Ideal para: hospedagem, restaurantes</p>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="price-card">
+              <h5>Premium</h5>
+              <div class="price">R$ 2.500</div>
+              <div class="period">pagamento único</div>
+              <hr>
+              <ul class="text-start small">
+                <li>Tudo do Profissional</li>
+                <li>E-commerce (loja online)</li>
+                <li>Sistema de agendamento</li>
+                <li>Blog/notícias</li>
+                <li>SEO avançado</li>
+                <li>3 revisões</li>
+                <li>60 dias de suporte</li>
+                <li>Manutenção mensal (R$ 150/mês)</li>
+              </ul>
+              <p class="small text-muted mt-2">Ideal para: imóveis, e-commerce</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="card mt-3">
+          <div class="card-body">
+            <h6><i class="bi bi-info-circle me-2"></i>Dicas de precificação</h6>
+            <ul class="small mb-0">
+              <li><strong>Sempre peça 50% adiantado</strong> antes de começar</li>
+              <li><strong>Ofereça parcelamento</strong> em 2x ou 3x no cartão</li>
+              <li><strong>Manutenção mensal</strong> é receita recorrente (R$ 100-200/mês por cliente)</li>
+              <li><strong>Não dê desconto</strong> — ofereça mais valor (mais páginas, mais revisões)</li>
+              <li><strong>Mostre o ROI</strong>: "Uma reserva a mais por mês já paga o site em X meses"</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="section" id="nichos">
+        <h2 class="section-title">7. Abordagem por Nicho</h2>
+        <p class="section-subtitle">Como adaptar a conversa para cada tipo de negócio</p>
+
+        <div class="niche-card">
+          <h5><i class="bi bi-house-door me-2"></i>Pousadas e Hotéis</h5>
+          <p class="small"><strong>Pergunta-chave:</strong> "Vocês recebem reservas diretas ou dependem do Booking/Airbnb?"</p>
+          <p class="small"><strong>Pitch:</strong> "Com um site próprio, vocês recebem reservas sem pagar 15-25% de comissão. Um site com reservas online + Google Business Profile otimizado pode aumentar reservas diretas em 40%."</p>
+          <p class="small"><strong>Site modelo:</strong> Home com fotos, quartos, reservas online, localização, depoimentos, contato.</p>
+          <p class="small"><strong>Preço sugerido:</strong> R$ 1.500 (Profissional)</p>
+        </div>
+
+        <div class="niche-card">
+          <h5><i class="bi bi-cup-straw me-2"></i>Restaurantes e Bares</h5>
+          <p class="small"><strong>Pergunta-chave:</strong> "Vocês têm cardápio digital ou ainda usam cardápio impresso?"</p>
+          <p class="small"><strong>Pitch:</strong> "Um site com cardápio digital, pedidos online e reservas de mesa aumenta o ticket médio em 35%. Além disso, aparece no Google quando alguém busca 'restaurante em Itacaré'."</p>
+          <p class="small"><strong>Site modelo:</strong> Home, cardápio, pedidos online, reservas, fotos, localização, contato.</p>
+          <p class="small"><strong>Preço sugerido:</strong> R$ 1.500 (Profissional)</p>
+        </div>
+
+        <div class="niche-card">
+          <h5><i class="bi bi-bag me-2"></i>Comércio</h5>
+          <p class="small"><strong>Pergunta-chave:</strong> "Vocês vendem online ou só no balcão?"</p>
+          <p class="small"><strong>Pitch:</strong> "Um e-commerce ou catálogo online permite vender 24/7, inclusive para turistas que visitaram Itacaré e querem comprar de volta. Instagram Shopping + site = mais vendas."</p>
+          <p class="small"><strong>Site modelo:</strong> Home, catálogo/produtos, carrinho, checkout, contato.</p>
+          <p class="small"><strong>Preço sugerido:</strong> R$ 800-2.500 (Básico a Premium)</p>
+        </div>
+
+        <div class="niche-card">
+          <h5><i class="bi bi-tools me-2"></i>Serviços (salões, clínicas, etc.)</h5>
+          <p class="small"><strong>Pergunta-chave:</strong> "Como os clientes agendam com vocês? Por WhatsApp ou tem um sistema?"</p>
+          <p class="small"><strong>Pitch:</strong> "Um site com agendamento online reduz faltas, organiza a agenda e passa profissionalismo. Além disso, serve como portfólio para mostrar seu trabalho."</p>
+          <p class="small"><strong>Site modelo:</strong> Home, serviços, agendamento, portfólio, depoimentos, contato.</p>
+          <p class="small"><strong>Preço sugerido:</strong> R$ 800 (Básico)</p>
+        </div>
+
+        <div class="niche-card">
+          <h5><i class="bi bi-house me-2"></i>Imóveis</h5>
+          <p class="small"><strong>Pergunta-chave:</strong> "Como os interessados encontram os imóveis de vocês?"</p>
+          <p class="small"><strong>Pitch:</strong> "Um site com busca de imóveis (por tipo, preço, localização) captura leads qualificados. Cada lead que chega pelo site é um potencial comprador/alugador."</p>
+          <p class="small"><strong>Site modelo:</strong> Home, busca de imóveis, detalhes, formulário de interesse, contato.</p>
+          <p class="small"><strong>Preço sugerido:</strong> R$ 2.500 (Premium)</p>
+        </div>
+
+        <div class="niche-card">
+          <h5><i class="bi bi-water me-2"></i>Esportes & Passeios</h5>
+          <p class="small"><strong>Pergunta-chave:</strong> "Como os turistas reservam os passeios de vocês?"</p>
+          <p class="small"><strong>Pitch:</strong> "Um site com reservas online, galeria de fotos e depoimentos atrai turistas que estão pesquisando 'passeios em Itacaré' no Google. Reservas diretas = mais lucro."</p>
+          <p class="small"><strong>Site modelo:</strong> Home, passeios, reservas online, galeria, depoimentos, contato.</p>
+          <p class="small"><strong>Preço sugerido:</strong> R$ 1.500 (Profissional)</p>
+        </div>
+      </div>
+
+      <div class="section" id="followup">
+        <h2 class="section-title">8. Follow-up e Cadência</h2>
+        <p class="section-subtitle">A maioria das vendas acontece no follow-up, não no primeiro contato</p>
+
+        <div class="card">
+          <div class="card-header bg-primary text-white"><i class="bi bi-calendar-check me-2"></i>Cadência de Follow-up</div>
+          <div class="card-body">
+            <table class="table table-sm mb-0">
+              <thead><tr><th>Dia</th><th>Ação</th><th>Mensagem</th></tr></thead>
+              <tbody>
+                <tr><td>0</td><td>Primeiro contato</td><td>Script de abordagem (WhatsApp)</td></tr>
+                <tr><td>2</td><td>Follow-up 1</td><td>"Oi! Conseguiu ver minha mensagem? Posso mostrar um modelo?"</td></tr>
+                <tr><td>5</td><td>Follow-up 2</td><td>"Enviei um modelo de site para [nicho]. Quer que eu envie para vocês também?"</td></tr>
+                <tr><td>10</td><td>Follow-up 3</td><td>"Última mensagem! Se precisarem de site no futuro, estou à disposição."</td></tr>
+                <tr><td>15</td><td>Follow-up 4</td><td>"Despedida. Boa temporada!"</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="card mt-3">
+          <div class="card-body">
+            <h6><i class="bi bi-lightbulb me-2 text-warning"></i>Regras de ouro do follow-up</h6>
+            <ul class="small mb-0">
+              <li><strong>Nunca seja insistente</strong> — máximo 4-5 tentativas</li>
+              <li><strong>Sempre agregue valor</strong> — envie um modelo, uma dica, um caso de sucesso</li>
+              <li><strong>Respeite o "não"</strong> — se disser não, agradeça e siga em frente</li>
+              <li><strong>Use o CRM</strong> — o CRM lembra quando fazer follow-up</li>
+              <li><strong>Personalize</strong> — mencione o nome do negócio, reviews do Google, Instagram</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="section" id="crm">
+        <h2 class="section-title">9. Usando o CRM</h2>
+        <p class="section-subtitle">Como usar o CRM Itacaré para organizar sua prospecção</p>
+
+        <div class="card">
+          <div class="card-header bg-primary text-white"><i class="bi bi-people me-2"></i>Fluxo no CRM</div>
+          <div class="card-body">
+            <ol>
+              <li><strong>Acesse o CRM:</strong> `http://127.0.0.1:8080/crm-web.html` (local) ou GitHub Pages</li>
+              <li><strong>Filtre por "Sem site"</strong> no sidebar ou na view Leads</li>
+              <li><strong>Abra a ficha do lead</strong> (clique no nome)</li>
+              <li><strong>Veja os dados:</strong> nome, nicho, grupo, WhatsApp, Instagram, Google Maps (rating/reviews)</li>
+              <li><strong>Na aba "Abordagens"</strong>: selecione o lead e um template → clique "Aplicar Abordagem"</li>
+              <li><strong>Envie via WhatsApp</strong>: clique "Enviar WhatsApp" (abre o WhatsApp Web com a mensagem)</li>
+              <li><strong>Marque como contatado</strong>: clique "Marcar como enviada"</li>
+              <li><strong>Acompanhe no Pipeline</strong>: arraste o card entre as colunas (Novo → Contatado → Respondeu → ...)</li>
+              <li><strong>Agende follow-up</strong>: na ficha do lead, clique "Agendar Follow-up"</li>
+            </ol>
+          </div>
+        </div>
+
+        <div class="card mt-3">
+          <div class="card-body">
+            <h6><i class="bi bi-keyboard me-2"></i>Atalhos de teclado</h6>
+            <div class="row">
+              <div class="col-md-6">
+                <ul class="small mb-0">
+                  <li><kbd>Ctrl+N</kbd> — Novo lead</li>
+                  <li><kbd>Ctrl+F</kbd> — Buscar</li>
+                  <li><kbd>Ctrl+L</kbd> — View Leads</li>
+                  <li><kbd>Ctrl+P</kbd> — View Pipeline</li>
+                </ul>
+              </div>
+              <div class="col-md-6">
+                <ul class="small mb-0">
+                  <li><kbd>Ctrl+A</kbd> — View Abordagens</li>
+                  <li><kbd>Ctrl+D</kbd> — View Dashboard</li>
+                  <li><kbd>Ctrl+T</kbd> — Alternar tema</li>
+                  <li><kbd>Ctrl+Shift+S</kbd> — Filtro "Sem site"</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card mt-3">
+          <div class="card-body">
+            <h6><i class="bi bi-palette me-2"></i>BrandKit (Identidade Visual)</h6>
+            <p class="small mb-2">O BrandKit extrai a identidade visual do Instagram do lead (paleta de cores, logo, fotos).</p>
+            <ol class="small mb-0">
+              <li>Na view "BrandKit", digite o @ do Instagram do lead</li>
+              <li>Marque "Modo demo" (para testar) ou desmarque (para Instagram real)</li>
+              <li>Clique "Rodar BrandKit" → aguarde → kit importado automaticamente</li>
+              <li>Na ficha do lead, veja a seção "BrandKit" com paleta, logo e fotos</li>
+              <li>Use a paleta de cores para criar o site do cliente</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+
+      <div class="section" id="checklist">
+        <h2 class="section-title">10. Checklist Diário</h2>
+        <p class="section-subtitle">Rotina de prospecção para vendedores</p>
+
+        <div class="card">
+          <div class="card-body">
+            <ul class="checklist">
+              <li>Abrir o CRM e verificar follow-ups pendentes (Dashboard)</li>
+              <li>Enviar 10 mensagens de primeiro contato (leads "Sem site" + Score A)</li>
+              <li>Responder mensagens do WhatsApp (leads que responderam)</li>
+              <li>Fazer 2-3 follow-ups (leads contatados há 2+ dias)</li>
+              <li>Atualizar status no CRM (Pipeline drag & drop)</li>
+              <li>Anotar resultados: quantos contatados, responderam, fecharam</li>
+              <li>Agendar follow-ups para os leads que responderam</li>
+              <li>Preparar 1 proposta personalizada (com modelo de site)</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="card mt-3">
+          <div class="card-body">
+            <h6><i class="bi bi-target me-2 text-danger"></i>Metas semanais</h6>
+            <ul class="small mb-0">
+              <li><strong>50</strong> leads contatados por semana</li>
+              <li><strong>10</strong> respostas por semana</li>
+              <li><strong>3</strong> reuniões/propostas por semana</li>
+              <li><strong>1</strong> fechamento por semana</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="section" id="kpis">
+        <h2 class="section-title">11. KPIs e Metas</h2>
+        <p class="section-subtitle">Métricas para acompanhar seu desempenho</p>
+
+        <div class="kpi-grid mb-4">
+          <div class="kpi"><div class="value">5-10%</div><div class="label">Taxa de resposta</div></div>
+          <div class="kpi"><div class="value">20-30%</div><div class="label">Taxa de conversão (resposta → reunião)</div></div>
+          <div class="kpi"><div class="value">30-50%</div><div class="label">Taxa de fechamento (reunião → venda)</div></div>
+          <div class="kpi"><div class="value">R$ 800-2.500</div><div class="label">Ticket médio por site</div></div>
+        </div>
+
+        <div class="card">
+          <div class="card-header bg-success text-white"><i class="bi bi-calculator me-2"></i>Projeção mensal (1 vendedor)</div>
+          <div class="card-body">
+            <table class="table table-sm mb-0">
+              <thead><tr><th>Métrica</th><th>Semana</th><th>Mês (4 sem)</th></tr></thead>
+              <tbody>
+                <tr><td>Leads contatados</td><td>50</td><td>200</td></tr>
+                <tr><td>Respostas (5-10%)</td><td>3-5</td><td>10-20</td></tr>
+                <tr><td>Reuniões (20-30%)</td><td>1-2</td><td>3-6</td></tr>
+                <tr><td>Fechamentos (30-50%)</td><td>0-1</td><td>1-3</td></tr>
+                <tr><td><strong>Receita (R$ 1.500/site)</strong></td><td><strong>R$ 0-1.500</strong></td><td><strong>R$ 1.500-4.500</strong></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="card mt-3">
+          <div class="card-body">
+            <h6><i class="bi bi-trophy me-2 text-warning"></i>Dicas para aumentar resultados</h6>
+            <ul class="small mb-0">
+              <li><strong>Foque em Score A</strong> — leads com Google Maps ativo e muitos reviews</li>
+              <li><strong>Comece por hospedagem</strong> — maior ticket (R$ 1.500) e maior dor (dependem de OTAs)</li>
+              <li><strong>Use o BrandKit</strong> — mostrar a paleta de cores do cliente impressiona</li>
+              <li><strong>Envie modelos</strong> — "Veja como ficaria o site de vocês" (com as cores deles)</li>
+              <li><strong>Peça indicações</strong> — "Conhece outro negócio em Itacaré que precisa de site?"</li>
+              <li><strong>Temporada alta</strong> — venda antes da temporada (novembro-dezembro)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="section text-center py-5">
+        <h2 class="section-title">Boa sorte! 🚀</h2>
+        <p class="text-muted">Lembre-se: cada "não" te aproxima do "sim". Persistência e valor são a chave.</p>
+        <a href="crm-web.html" class="btn btn-primary btn-lg mt-3"><i class="bi bi-arrow-left me-2"></i>Voltar ao CRM</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

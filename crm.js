@@ -90,6 +90,7 @@ function copyTemplate(id){const t=TEMPLATES.find(x=>x.id===id);if(!t)return;navi
 
 // ===== DOCS =====
 const DOCS = [
+  { id: 'manual-vendas', title: 'Manual de Vendas de Sites', file: 'manual-vendas-sites.html', icon: 'bi-megaphone', desc: 'Guia completo para vender websites (para vendedores iniciantes)' },
   { id: 'completo', title: 'Levantamento Completo + Google Maps', file: 'itacare-completo-empresas-nichos-googlemaps.md', icon: 'bi-file-earmark-text', desc: 'Todos os ~844 negócios com dados de contato e Google Maps' },
   { id: 'nichos', title: 'Levantamento de Nichos', file: 'itacare-scraping-empresas-nichos.md', icon: 'bi-diagram-3', desc: 'Taxonomia de nichos e categorias do diretório' },
   { id: 'negocios', title: 'Bares & Restaurantes', file: 'itacare_negocios.md', icon: 'bi-cup-straw', desc: '174 restaurantes, bares, pizzarias e mais' },
@@ -123,6 +124,12 @@ async function viewDoc(id) {
   container.style.display = 'none';
   viewer.style.display = 'block';
   content.innerHTML = '<div class="text-center py-4"><div class="spinner-border text-primary" role="status"></div><p class="mt-2 text-muted">Carregando documento...</p></div>';
+  // HTML files open in new tab
+  if (doc.file.endsWith('.html')) {
+    window.open(doc.file, '_blank');
+    closeDoc();
+    return;
+  }
   try {
     const resp = await fetch(doc.file);
     if (!resp.ok) throw new Error('Arquivo não encontrado');
