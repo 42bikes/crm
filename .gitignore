@@ -1,0 +1,41 @@
+# Rust
+target/
+Cargo.lock
+Cargo.toml
+src/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+*.egg-info/
+
+# BrandKit output
+projetim/
+out/
+
+# Clone service
+clone-kit/
+clone-service/
+clones/
+
+# CRM data
+*.db
+*.db-journal
+
+# Temp files
+*.bak
+*.tmp
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# JS loader (not needed)
+js_loader.html
+PYEOF

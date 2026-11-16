@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CRM Itacaré - Prospecção</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<style>
+:root{--primary:#6366f1;--primary-dark:#4f46e5;--primary-light:#818cf8;--accent:#06b6d4;--accent-dark:#0891b2;--success:#10b981;--success-dark:#059669;--warning:#f59e0b;--warning-dark:#d97706;--danger:#f43f5e;--danger-dark:#e11d48;--purple:#8b5cf6;--orange:#f97316;--teal:#14b8a6;--pink:#ec4899;--bg:#f0f4f8;--card-bg:#ffffff;--text:#1e293b;--text-muted:#64748b;--border:#e2e8f0;--sidebar-bg:linear-gradient(180deg,#0f0a2e 0%,#1e1b4b 30%,#312e81 70%,#4338ca 100%);--shadow:0 4px 20px rgba(0,0,0,0.08);}
+[data-theme="dark"]{--bg:#0a0e1a;--card-bg:#131a2b;--text:#e2e8f0;--text-muted:#94a3b8;--border:#1e293b;--sidebar-bg:linear-gradient(180deg,#050810 0%,#0f172a 30%,#1e293b 70%,#334155 100%);--shadow:0 4px 20px rgba(0,0,0,0.3);}
+*{box-sizing:border-box;}body{background:var(--bg);font-family:'Inter',system-ui,sans-serif;margin:0;color:var(--text);transition:background .3s,color .3s;overflow-x:hidden;}
+.sidebar{position:fixed;top:0;left:0;bottom:0;width:280px;background:var(--sidebar-bg);color:#fff;z-index:1000;transition:transform .3s,background .3s;display:flex;flex-direction:column;box-shadow:4px 0 30px rgba(0,0,0,.2);}
+.sidebar-brand{padding:24px 20px;font-size:1.3rem;font-weight:700;border-bottom:1px solid rgba(255,255,255,.08);display:flex;align-items:center;gap:12px;}
+.sidebar-brand i{font-size:2rem;color:#22d3ee;filter:drop-shadow(0 0 8px rgba(34,211,238,.5));}
+.sidebar-brand small{font-size:.7rem;color:rgba(255,255,255,.5);font-weight:400;display:block;margin-top:2px;}
+.sidebar-nav{flex:1;padding:12px 0;overflow-y:auto;}
+.sidebar-nav .nav-section{padding:12px 20px 6px;font-size:.65rem;text-transform:uppercase;letter-spacing:1.5px;color:rgba(255,255,255,.35);font-weight:600;}
+.sidebar-nav .nav-item{display:flex;align-items:center;gap:12px;padding:11px 20px;color:rgba(255,255,255,.65);text-decoration:none;cursor:pointer;transition:all .2s;border-left:3px solid transparent;font-size:.9rem;font-weight:500;}
+.sidebar-nav .nav-item:hover{background:rgba(255,255,255,.08);color:#fff;padding-left:24px;}
+.sidebar-nav .nav-item.active{background:rgba(99,102,241,.25);color:#fff;border-left-color:#22d3ee;padding-left:24px;}
+.sidebar-nav .nav-item i{font-size:1.15rem;width:24px;text-align:center;}
+.sidebar-nav .nav-item .badge{margin-left:auto;font-size:.65rem;padding:3px 8px;}
+.sidebar-footer{padding:15px 20px;border-top:1px solid rgba(255,255,255,.1);font-size:.75rem;color:rgba(255,255,255,.4);}
+.main-content{margin-left:280px;min-height:100vh;}
+.top-bar{background:rgba(255,255,255,.85);backdrop-filter:blur(12px);padding:14px 30px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:999;transition:background .3s;}
+[data-theme="dark"] .top-bar{background:rgba(19,26,43,.85);}
+.top-bar h5{margin:0;font-weight:600;color:var(--text);}
+.content-area{padding:28px;}
+.card{border:none;box-shadow:0 1px 3px rgba(0,0,0,.04),0 4px 12px rgba(0,0,0,.04);border-radius:16px;background:var(--card-bg);transition:background .3s,box-shadow .3s;}
+.card:hover{box-shadow:0 8px 30px rgba(0,0,0,.1);}
+.card-header{border-radius:16px 16px 0 0 !important;font-weight:600;border-bottom:1px solid var(--border);padding:14px 20px;}
+.stat-card{text-align:center;padding:24px 16px;position:relative;overflow:hidden;border-radius:16px;}
+.stat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;border-radius:16px 16px 0 0;}
+.stat-card.primary::before{background:var(--primary);}
+.stat-card.success::before{background:var(--success);}
+.stat-card.warning::before{background:var(--warning);}
+.stat-card.info::before{background:var(--accent);}
+.stat-card.danger::before{background:var(--danger);}
+.stat-card .stat-value{font-size:2.4rem;font-weight:700;line-height:1;}
+.stat-card .stat-label{font-size:.7rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;margin-top:8px;font-weight:600;}
+.stat-card .stat-icon{font-size:1.3rem;margin-bottom:10px;opacity:.6;}
+.badge-score{font-weight:600;padding:4px 10px;border-radius:6px;font-size:.7rem;letter-spacing:.5px;}
+.badge-a{background:linear-gradient(135deg,#f43f5e,#e11d48);color:white;}
+.badge-b{background:linear-gradient(135deg,#f59e0b,#d97706);color:#000;}
+.badge-c{background:linear-gradient(135deg,#64748b,#475569);color:white;}
+.status-badge{font-weight:500;padding:4px 12px;border-radius:20px;font-size:.7rem;}
+.status-novo{background:#dbeafe;color:#1d4ed8;}
+.status-contatado{background:#cffafe;color:#0e7490;}
+.status-respondeu{background:#d1fae5;color:#047857;}
+.status-reuniao{background:#ede9fe;color:#6d28d9;}
+.status-proposta{background:#ffedd5;color:#c2410c;}
+.status-fechado{background:#d1fae5;color:#047857;font-weight:700;}
+.status-perdido{background:#fee2e2;color:#b91c1c;}
+.site-badge{font-weight:500;padding:3px 8px;border-radius:12px;font-size:.7rem;}
+.site-yes{background:#d1fae5;color:#047857;}
+.site-no{background:#fee2e2;color:#b91c1c;}
+.table{font-size:.88rem;}
+.table th{font-weight:600;color:var(--text-muted);border-bottom:2px solid var(--border);white-space:nowrap;font-size:.75rem;text-transform:uppercase;letter-spacing:.5px;cursor:pointer;user-select:none;}
+.table th:hover{color:var(--primary);}
+.table th.sorted{color:var(--primary);}
+.table td{vertical-align:middle;border-color:var(--border);}
+.table-hover tbody tr{cursor:pointer;transition:background .15s;}
+.table-hover tbody tr:hover{background:#eef2ff;}
+[data-theme="dark"] .table-hover tbody tr:hover{background:#1e293b;}
+.link-wa{color:#22c55e;text-decoration:none;font-weight:500;}
+.link-wa:hover{color:#16a34a;}
+.link-ig{color:#ec4899;text-decoration:none;}
+.link-ig:hover{color:#db2777;}
+.link-web{color:var(--primary);text-decoration:none;}
+.link-web:hover{color:var(--primary-dark);}
+.search-wrapper{position:relative;}
+.search-wrapper i{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--text-muted);}
+.search-wrapper input{padding-left:36px;border-radius:10px;border:1px solid var(--border);background:#f8fafc;}
+[data-theme="dark"] .search-wrapper input{background:#0f172a;color:var(--text);}
+.search-wrapper input:focus{background:#fff;border-color:var(--primary);box-shadow:0 0 0 3px rgba(99,102,241,.15);}
+[data-theme="dark"] .search-wrapper input:focus{background:#1e293b;}
+.filter-chips{display:flex;gap:6px;flex-wrap:wrap;}
+.filter-chip{padding:5px 14px;border-radius:20px;font-size:.78rem;cursor:pointer;border:1px solid var(--border);background:var(--card-bg);transition:all .2s;user-select:none;font-weight:500;color:var(--text);}
+.filter-chip:hover{border-color:var(--primary);color:var(--primary);}
+.filter-chip.active{background:var(--primary);color:white;border-color:var(--primary);}
+.empty-state{text-align:center;padding:60px 20px;color:var(--text-muted);}
+.empty-state i{font-size:4rem;margin-bottom:16px;opacity:.3;}
+.note-item{border-left:3px solid var(--primary);padding:10px 14px;margin-bottom:10px;background:#f8fafc;border-radius:0 8px 8px 0;}
+[data-theme="dark"] .note-item{background:#0f172a;}
+.note-date{font-size:.72rem;color:var(--text-muted);margin-bottom:4px;}
+.modal-header{background:linear-gradient(135deg,var(--primary),var(--primary-dark));color:white;border:none;}
+.modal-header .btn-close{filter:invert(1);}
+.modal-body{max-height:70vh;overflow-y:auto;}
+.modal-content{border:none;border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,.2);background:var(--card-bg);color:var(--text);}
+.toast-container{position:fixed;top:20px;right:20px;z-index:9999;}
+.toast{border-radius:10px;box-shadow:0 4px 12px rgba(0,0,0,.15);}
+.import-area{border:2px dashed var(--border);border-radius:14px;padding:50px 20px;text-align:center;transition:all .2s;cursor:pointer;}
+.import-area:hover{border-color:var(--primary);background:#eef2ff;}
+.import-area.dragover{border-color:var(--primary);background:#e0e7ff;}
+.kanban-column{min-height:250px;background:#f1f5f9;border-radius:10px;padding:8px;transition:background .2s,border .2s;border:2px solid transparent;}
+[data-theme="dark"] .kanban-column{background:#0f172a;}
+.kanban-column.drag-over{background:#dbeafe;border:2px dashed var(--primary);}
+.kanban-card{background:var(--card-bg);border-radius:10px;padding:12px;margin-bottom:8px;box-shadow:0 1px 3px rgba(0,0,0,.06);cursor:grab;transition:transform .15s,box-shadow .15s,opacity .15s;user-select:none;border:1px solid var(--border);}
+.kanban-card:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.1);}
+.kanban-card.dragging{opacity:.4;transform:rotate(2deg) scale(.98);}
+.kanban-card .card-title{font-size:.88rem;font-weight:600;margin-bottom:4px;color:var(--text);}
+.kanban-card .card-meta{font-size:.72rem;color:var(--text-muted);}
+.kanban-card .card-abordagem{font-size:.72rem;color:var(--text);margin-top:6px;padding:6px 8px;background:#eef2ff;border-radius:6px;border-left:3px solid var(--primary);line-height:1.3;}
+[data-theme="dark"] .kanban-card .card-abordagem{background:#1e293b;}
+.kanban-card .card-abordagem i{color:var(--primary);}
+.kanban-card .card-actions{display:flex;gap:4px;margin-top:6px;opacity:0;transition:opacity .15s;}
+.kanban-card:hover .card-actions{opacity:1;}
+.drag-handle{cursor:grab;color:#cbd5e1;font-size:1rem;}
+.drag-handle:active{cursor:grabbing;}
+.abordagem-box{background:linear-gradient(135deg,#eef2ff,#e0e7ff);border:1px solid #c7d2fe;border-radius:10px;padding:14px;margin-top:8px;}
+[data-theme="dark"] .abordagem-box{background:linear-gradient(135deg,#1e293b,#312e81);border-color:#4338ca;}
+.abordagem-box label{font-size:.8rem;font-weight:600;color:var(--primary-dark);}
+[data-theme="dark"] .abordagem-box label{color:var(--primary-light);}
+.abordagem-box textarea{font-size:.9rem;resize:vertical;min-height:70px;border:1px solid #c7d2fe;background:#fff;color:var(--text);}
+[data-theme="dark"] .abordagem-box textarea{background:#0f172a;border-color:#4338ca;color:var(--text);}
+.abordagem-box textarea:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(99,102,241,.15);}
+.fab{position:fixed;bottom:30px;right:30px;width:58px;height:58px;border-radius:50%;background:linear-gradient(135deg,var(--primary),var(--accent));color:white;border:none;box-shadow:0 4px 20px rgba(99,102,241,.4);font-size:1.6rem;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:transform .2s,box-shadow .2s;z-index:998;}
+.fab:hover{transform:scale(1.1) rotate(90deg);box-shadow:0 6px 25px rgba(99,102,241,.5);}
+.template-card{background:#f8fafc;border:1px solid var(--border);border-radius:10px;padding:14px;margin-bottom:10px;transition:all .2s;cursor:pointer;}
+[data-theme="dark"] .template-card{background:#0f172a;}
+.template-card:hover{border-color:var(--primary);background:#eef2ff;transform:translateX(4px);}
+[data-theme="dark"] .template-card:hover{background:#1e293b;}
+.template-card .template-title{font-weight:600;font-size:.9rem;color:var(--primary-dark);}
+[data-theme="dark"] .template-card .template-title{color:var(--primary-light);}
+.template-card .template-preview{font-size:.8rem;color:var(--text-muted);margin-top:4px;line-height:1.4;}
+.template-card .template-actions{display:flex;gap:6px;margin-top:8px;}
+.approach-timeline{position:relative;padding-left:20px;}
+.approach-timeline::before{content:'';position:absolute;left:6px;top:0;bottom:0;width:2px;background:var(--border);}
+.approach-item{position:relative;margin-bottom:12px;padding-left:16px;}
+.approach-item::before{content:'';position:absolute;left:-17px;top:6px;width:10px;height:10px;border-radius:50%;background:var(--primary);border:2px solid var(--card-bg);box-shadow:0 0 0 2px var(--primary);}
+.approach-item .approach-date{font-size:.72rem;color:var(--text-muted);}
+.approach-item .approach-text{font-size:.88rem;margin-top:2px;}
+.approach-status{display:inline-flex;align-items:center;gap:4px;font-size:.75rem;padding:2px 8px;border-radius:12px;}
+.approach-sent{background:#dbeafe;color:#1d4ed8;}
+.approach-viewed{background:#fef3c7;color:#92400e;}
+.approach-replied{background:#d1fae5;color:#047857;}
+.approach-noresponse{background:#fee2e2;color:#b91c1c;}
+.quick-action-bar{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;}
+.quick-action-btn{padding:4px 10px;border-radius:6px;font-size:.75rem;border:1px solid var(--border);background:var(--card-bg);cursor:pointer;transition:all .15s;display:inline-flex;align-items:center;gap:4px;color:var(--text);}
+.quick-action-btn:hover{border-color:var(--primary);color:var(--primary);background:#eef2ff;}
+.quick-action-btn.wa:hover{border-color:#22c55e;color:#22c55e;background:#f0fdf4;}
+.quick-action-btn.ig:hover{border-color:#ec4899;color:#ec4899;background:#fdf2f8;}
+.quick-action-btn.copy:hover{border-color:var(--warning);color:var(--warning-dark);background:#fffbeb;}
+.gm-stars{color:#f59e0b;font-weight:600;}
+.gm-count{color:var(--text-muted);font-size:.8rem;}
+.checkbox-col{width:40px;}
+.bulk-actions{display:none;background:var(--primary);color:white;padding:8px 16px;border-radius:8px;margin-bottom:10px;}
+.bulk-actions.show{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.sort-icon{font-size:.7rem;margin-left:4px;opacity:.5;}
+.sort-icon.active{opacity:1;color:var(--primary);}
+.reminder-item{padding:10px 12px;border-left:3px solid var(--warning);background:#fffbeb;border-radius:0 8px 8px 0;margin-bottom:8px;}
+[data-theme="dark"] .reminder-item{background:#1c1917;}
+.reminder-item.overdue{border-left-color:var(--danger);background:#fef2f2;}
+[data-theme="dark"] .reminder-item.overdue{background:#1c1917;}
+.reminder-item .reminder-date{font-size:.72rem;color:var(--text-muted);}
+.reminder-item .reminder-text{font-size:.88rem;font-weight:500;}
+.no-site-badge{background:#fee2e2;color:#b91c1c;font-weight:600;padding:3px 8px;border-radius:12px;font-size:.7rem;}
+.has-site-badge{background:#d1fae5;color:#047857;font-weight:600;padding:3px 8px;border-radius:12px;font-size:.7rem;}
+.doc-card{background:var(--card-bg);border:1px solid var(--border);border-radius:12px;padding:20px;transition:all .2s;cursor:pointer;}
+.doc-card:hover{border-color:var(--primary);transform:translateY(-2px);box-shadow:0 8px 20px rgba(99,102,241,.1);}
+.doc-card .doc-icon{font-size:2.5rem;margin-bottom:10px;}
+.doc-card .doc-title{font-weight:600;font-size:1rem;color:var(--text);}
+.doc-card .doc-desc{font-size:.85rem;color:var(--text-muted);margin-top:4px;}
+.doc-viewer{background:var(--card-bg);border:1px solid var(--border);border-radius:12px;padding:30px;max-height:70vh;overflow-y:auto;}
+.doc-viewer h1,.doc-viewer h2,.doc-viewer h3{color:var(--primary-dark);margin-top:1.5em;}
+[data-theme="dark"] .doc-viewer h1,[data-theme="dark"] .doc-viewer h2,[data-theme="dark"] .doc-viewer h3{color:var(--primary-light);}
+.doc-viewer table{width:100%;border-collapse:collapse;margin:1em 0;}
+.doc-viewer th,.doc-viewer td{border:1px solid var(--border);padding:8px 12px;}
+.doc-viewer th{background:var(--primary);color:white;font-weight:600;}
+.doc-viewer tr:nth-child(even){background:#f8fafc;}
+[data-theme="dark"] .doc-viewer tr:nth-child(even){background:#1e293b;}
+.doc-viewer code{background:#eef2ff;padding:2px 6px;border-radius:4px;font-size:.85rem;color:var(--primary-dark);}
+[data-theme="dark"] .doc-viewer code{background:#1e293b;color:var(--primary-light);}
+.doc-viewer pre{background:#f1f5f9;padding:12px;border-radius:8px;overflow-x:auto;}
+[data-theme="dark"] .doc-viewer pre{background:#0f172a;}
+.doc-viewer blockquote{border-left:4px solid var(--primary);padding-left:16px;color:var(--text-muted);margin:1em 0;}
+.doc-viewer a{color:var(--primary);}
+.doc-viewer hr{border-color:var(--border);}
+.doc-viewer ul,.doc-viewer ol{padding-left:20px;}
+.doc-viewer li{margin-bottom:4px;}
+.doc-nav{display:flex;gap:8px;margin-bottom:15px;flex-wrap:wrap;}
+.doc-nav button{border-radius:8px;}
+.glass-card{background:var(--glass);backdrop-filter:blur(10px);border:1px solid var(--glass-border);}
+::-webkit-scrollbar{width:6px;height:6px;}
+::-webkit-scrollbar-track{background:#f1f5f9;}
+::-webkit-scrollbar-thumb{background:#cbd5e1;border-radius:3px;}
+::-webkit-scrollbar-thumb:hover{background:#94a3b8;}
+@media (max-width:992px){.sidebar{transform:translateX(-100%);}.sidebar.show{transform:translateX(0);}.main-content{margin-left:0;}.top-bar{padding:10px 15px;}.content-area{padding:15px;}}
+.fade-in{animation:fadeIn .3s ease;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+.approach-sent{background:#dbeafe;color:#1d4ed8;}
+.approach-viewed{background:#fef3c7;color:#92400e;}
+.approach-replied{background:#d1fae5;color:#047857;}
+.approach-noresponse{background:#fee2e2;color:#b91c1c;}
+.quick-action-bar{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;}
+.quick-action-btn{padding:4px 10px;border-radius:6px;font-size:.75rem;border:1px solid var(--border);background:var(--card-bg);cursor:pointer;transition:all .15s;display:inline-flex;align-items:center;gap:4px;color:var(--text);}
+.quick-action-btn:hover{border-color:var(--primary);color:var(--primary);background:#eef2ff;}
+.quick-action-btn.wa:hover{border-color:#22c55e;color:#22c55e;background:#f0fdf4;}
+.quick-action-btn.ig:hover{border-color:#ec4899;color:#ec4899;background:#fdf2f8;}
+.quick-action-btn.copy:hover{border-color:var(--warning);color:var(--warning-dark);background:#fffbeb;}
+.gm-stars{color:#f59e0b;font-weight:600;}
+.gm-count{color:var(--text-muted);font-size:.8rem;}
+.checkbox-col{width:40px;}
+.bulk-actions{display:none;background:var(--primary);color:white;padding:8px 16px;border-radius:8px;margin-bottom:10px;}
+.bulk-actions.show{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.sort-icon{font-size:.7rem;margin-left:4px;opacity:.5;}
+.sort-icon.active{opacity:1;color:var(--primary);}
+.reminder-item{padding:10px 12px;border-left:3px solid var(--warning);background:#fffbeb;border-radius:0 8px 8px 0;margin-bottom:8px;}
+[data-theme="dark"] .reminder-item{background:#1c1917;}
+.reminder-item.overdue{border-left-color:var(--danger);background:#fef2f2;}
+[data-theme="dark"] .reminder-item.overdue{background:#1c1917;}
+.reminder-item .reminder-date{font-size:.72rem;color:var(--text-muted);}
+.reminder-item .reminder-text{font-size:.88rem;font-weight:500;}
+.no-site-badge{background:#fee2e2;color:#b91c1c;font-weight:600;padding:3px 8px;border-radius:12px;font-size:.7rem;}
+.has-site-badge{background:#d1fae5;color:#047857;font-weight:600;padding:3px 8px;border-radius:12px;font-size:.7rem;}
+.shortcuts-modal kbd{background:#f1f5f9;border:1px solid #cbd5e1;border-radius:4px;padding:2px 6px;font-size:.75rem;}
+[data-theme="dark"] .shortcuts-modal kbd{background:#0f172a;border-color:#475569;}
+</style>
+</head>
+<body>
+
+<!-- Sidebar -->
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-brand"><i class="bi bi-bullseye"></i><div><span>CRM Itacaré</span><small>Prospecção Inteligente</small></div></div>
+  <div class="sidebar-nav">
+    <div class="nav-section">Principal</div>
+    <a class="nav-item active" onclick="showView('dashboard', this)"><i class="bi bi-speedometer2"></i> Dashboard</a>
+    <a class="nav-item" onclick="showView('leads', this)"><i class="bi bi-people"></i> Leads <span class="badge bg-primary rounded-pill" id="sidebarLeadCount">0</span></a>
+    <a class="nav-item" onclick="showView('pipeline', this)"><i class="bi bi-kanban"></i> Pipeline</a>
+    <a class="nav-item" onclick="showView('approaches', this)"><i class="bi bi-send"></i> Abordagens <span class="badge bg-warning text-dark rounded-pill" id="pendingApproaches">0</span></a>
+    <a class="nav-item" onclick="showView('templates', this)"><i class="bi bi-file-text"></i> Templates</a>
+    <a class="nav-item" onclick="showView('brandkit', this)"><i class="bi bi-palette"></i> BrandKit <span class="badge bg-info rounded-pill" id="brandkitCount">0</span></a>
+    <div class="nav-section">Documentos</div>
+    <a class="nav-item" onclick="showView('docs', this)"><i class="bi bi-file-earmark-text"></i> Recursos & Docs</a>
+    <div class="nav-section">Filtros Rápidos</div>
+    <a class="nav-item" onclick="quickFilter('score','A')"><i class="bi bi-star-fill" style="color:#f43f5e;"></i> Score A <span class="badge bg-danger rounded-pill" id="countA">0</span></a>
+    <a class="nav-item" onclick="quickFilter('score','B')"><i class="bi bi-star-half" style="color:#f59e0b;"></i> Score B <span class="badge bg-warning text-dark rounded-pill" id="countB">0</span></a>
+    <a class="nav-item" onclick="quickFilter('score','C')"><i class="bi bi-star" style="color:#64748b;"></i> Score C <span class="badge bg-secondary rounded-pill" id="countC">0</span></a>
+    <a class="nav-item" onclick="quickFilter('status','Novo')"><i class="bi bi-circle" style="color:#6366f1;"></i> Novos <span class="badge bg-primary rounded-pill" id="countNovo">0</span></a>
+    <a class="nav-item" onclick="quickFilter('site','no')"><i class="bi bi-globe" style="color:#f43f5e;"></i> Sem site <span class="badge bg-danger rounded-pill" id="countNoSite">0</span></a>
+    <a class="nav-item" onclick="quickFilter('site','yes')"><i class="bi bi-globe" style="color:#10b981;"></i> Com site <span class="badge bg-success rounded-pill" id="countHasSite">0</span></a>
+    <div class="nav-section">Dados</div>
+    <a class="nav-item" onclick="showView('import', this)"><i class="bi bi-upload"></i> Importar CSV</a>
+    <a class="nav-item" onclick="showView('export', this)"><i class="bi bi-download"></i> Exportar CSV</a>
+    <a class="nav-item" onclick="showView('backup', this)"><i class="bi bi-shield-check"></i> Backup/Restore</a>
+  </div>
+  <div class="sidebar-footer">
+    <div class="d-flex justify-content-between align-items-center">
+      <span><i class="bi bi-database me-1"></i> localStorage</span>
+      <button class="btn btn-sm btn-outline-light" onclick="toggleTheme()" title="Alternar tema" style="padding:2px 8px;font-size:0.75rem;"><i class="bi bi-moon-stars" id="themeIcon"></i></button>
+    </div>
+    <small>v7.0 - Docs + Design</small>
+  </div>
+</div>
+
+<!-- Top Bar -->
+<div class="main-content">
+  <div class="top-bar">
+    <div class="d-flex align-items-center gap-3">
+      <button class="btn btn-sm btn-outline-secondary d-lg-none" onclick="toggleSidebar()"><i class="bi bi-list"></i></button>
+      <h5 id="pageTitle">Dashboard</h5>
+    </div>
+    <div class="d-flex align-items-center gap-2">
+      <div class="search-wrapper">
+        <i class="bi bi-search"></i>
+        <input type="text" class="form-control form-control-sm" id="globalSearch" placeholder="Buscar... (Ctrl+F)" style="width:200px;" oninput="handleGlobalSearch()">
+      </div>
+      <button class="btn btn-sm btn-outline-secondary" onclick="showShortcuts()" title="Atalhos de teclado"><i class="bi bi-keyboard"></i></button>
+      <button class="btn btn-primary btn-sm" onclick="openAddModal()"><i class="bi bi-plus-lg me-1"></i>Novo Lead</button>
+    </div>
+  </div>
+  <div class="content-area">
+
+    <!-- DASHBOARD -->
+    <div id="view-dashboard" class="view fade-in">
+      <div class="row g-3 mb-4">
+        <div class="col-xl-3 col-md-6 col-6"><div class="card stat-card primary"><div class="stat-icon text-primary"><i class="bi bi-people-fill"></i></div><div class="stat-value text-primary" id="stat-total">0</div><div class="stat-label">Total Leads</div></div></div>
+        <div class="col-xl-3 col-md-6 col-6"><div class="card stat-card success"><div class="stat-icon text-success"><i class="bi bi-check-circle-fill"></i></div><div class="stat-value text-success" id="stat-contatados">0</div><div class="stat-label">Contatados</div></div></div>
+        <div class="col-xl-3 col-md-6 col-6"><div class="card stat-card warning"><div class="stat-icon" style="color:var(--warning);"><i class="bi bi-chat-dots-fill"></i></div><div class="stat-value" style="color:var(--warning);" id="stat-responderam">0</div><div class="stat-label">Responderam</div></div></div>
+        <div class="col-xl-3 col-md-6 col-6"><div class="card stat-card info"><div class="stat-icon" style="color:var(--accent);"><i class="bi bi-trophy-fill"></i></div><div class="stat-value" style="color:var(--accent);" id="stat-fechados">0</div><div class="stat-label">Fechados</div></div></div>
+      </div>
+      <div class="row g-3 mb-4">
+        <div class="col-xl-3 col-md-6 col-6"><div class="card stat-card danger"><div class="stat-icon text-danger"><i class="bi bi-globe"></i></div><div class="stat-value text-danger" id="stat-sem-site">0</div><div class="stat-label">Sem site</div></div></div>
+        <div class="col-xl-3 col-md-6 col-6"><div class="card stat-card success"><div class="stat-icon text-success"><i class="bi bi-globe2"></i></div><div class="stat-value text-success" id="stat-com-site">0</div><div class="stat-label">Com site</div></div></div>
+        <div class="col-xl-3 col-md-6 col-6"><div class="card stat-card warning"><div class="stat-icon" style="color:var(--warning);"><i class="bi bi-star-fill"></i></div><div class="stat-value" style="color:var(--warning);" id="stat-score-a">0</div><div class="stat-label">Score A</div></div></div>
+        <div class="col-xl-3 col-md-6 col-6"><div class="card stat-card info"><div class="stat-icon" style="color:var(--accent);"><i class="bi bi-bell-fill"></i></div><div class="stat-value" style="color:var(--accent);" id="stat-pendentes">0</div><div class="stat-label">Follow-ups pendentes</div></div></div>
+      </div>
+      <div class="row g-3">
+        <div class="col-lg-4"><div class="card h-100"><div class="card-header bg-primary text-white"><i class="bi bi-bar-chart-fill me-2"></i>Por Score</div><div class="card-body" id="chart-score"></div></div></div>
+        <div class="col-lg-4"><div class="card h-100"><div class="card-header" style="background:var(--success);color:white;"><i class="bi bi-pie-chart-fill me-2"></i>Por Status</div><div class="card-body" id="chart-status"></div></div></div>
+        <div class="col-lg-4"><div class="card h-100"><div class="card-header" style="background:var(--accent);color:white;"><i class="bi bi-grid-3x3-gap-fill me-2"></i>Por Grupo</div><div class="card-body" id="chart-grupo" style="max-height:300px;overflow-y:auto;"></div></div></div>
+      </div>
+      <div class="row g-3 mt-1">
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-header" style="background:linear-gradient(135deg,var(--warning),var(--warning-dark));color:#000;"><i class="bi bi-star-fill me-2"></i>Top 15 - Google Maps (mais reviews)</div>
+            <div class="card-body p-0">
+              <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                  <thead class="table-light"><tr><th>Nome</th><th>Grupo</th><th>Rating</th><th>Reviews</th><th>Site?</th><th>Status</th><th>Ação</th></tr></thead>
+                  <tbody id="topTable"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-header" style="background:linear-gradient(135deg,var(--danger),var(--danger-dark));color:white;"><i class="bi bi-bell-fill me-2"></i>Follow-ups Pendentes</div>
+            <div class="card-body" id="remindersList" style="max-height:350px;overflow-y:auto;"></div>
+          </div>
+        </div>
+      </div>
+      <div class="row g-3 mt-1">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header" style="background:linear-gradient(135deg,var(--purple),#7c3aed);color:white;"><i class="bi bi-send me-2"></i>Métricas de Abordagem</div>
+            <div class="card-body" id="approachMetrics"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- LEADS -->
+    <div id="view-leads" class="view" style="display:none;">
+      <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+        <div class="d-flex align-items-center gap-2">
+          <h5 class="mb-0">Leads</h5>
+          <span class="badge bg-secondary" id="leadsCountBadge">0</span>
+        </div>
+        <div class="d-flex gap-2 flex-wrap align-items-center">
+          <div class="search-wrapper">
+            <i class="bi bi-search"></i>
+            <input type="text" class="form-control form-control-sm" id="searchInput" placeholder="Buscar..." style="width:220px;" oninput="renderLeads()">
+          </div>
+          <select class="form-select form-select-sm" id="filterScore" onchange="renderLeads()" style="width:90px;">
+            <option value="">Score</option>
+            <option value="A">A</option><option value="B">B</option><option value="C">C</option>
+          </select>
+          <select class="form-select form-select-sm" id="filterStatus" onchange="renderLeads()" style="width:120px;">
+            <option value="">Status</option>
+            <option value="Novo">Novo</option><option value="Contatado">Contatado</option><option value="Respondeu">Respondeu</option>
+            <option value="Reunião">Reunião</option><option value="Proposta">Proposta</option><option value="Fechado">Fechado</option><option value="Perdido">Perdido</option>
+          </select>
+          <select class="form-select form-select-sm" id="filterGrupo" onchange="renderLeads()" style="width:130px;">
+            <option value="">Grupo</option>
+          </select>
+          <select class="form-select form-select-sm" id="filterSite" onchange="renderLeads()" style="width:110px;">
+            <option value="">Site</option>
+            <option value="no">Sem site</option>
+            <option value="yes">Com site</option>
+          </select>
+        </div>
+      </div>
+      <div class="bulk-actions" id="bulkActions">
+        <span id="selectedCount">0 selecionados</span>
+        <button class="btn btn-sm btn-light" onclick="bulkChangeStatus()"><i class="bi bi-arrow-repeat me-1"></i>Mudar Status</button>
+        <button class="btn btn-sm btn-light" onclick="bulkApplyApproach()"><i class="bi bi-chat-quote me-1"></i>Aplicar Abordagem</button>
+        <button class="btn btn-sm btn-light" onclick="bulkApplyTemplate()"><i class="bi bi-file-text me-1"></i>Aplicar Template</button>
+        <button class="btn btn-sm btn-light" onclick="bulkExport()"><i class="bi bi-download me-1"></i>Exportar</button>
+        <button class="btn btn-sm btn-outline-light" onclick="clearSelection()"><i class="bi bi-x me-1"></i>Limpar</button>
+      </div>
+      <div class="filter-chips mb-3" id="filterChips"></div>
+      <div class="card">
+        <div class="card-body p-0">
+          <div class="table-responsive">
+            <table class="table table-hover mb-0">
+              <thead class="table-light">
+                <tr>
+                  <th class="checkbox-col"><input type="checkbox" class="form-check-input" id="selectAll" onchange="toggleSelectAll()"></th>
+                  <th style="width:50px;" onclick="sortLeads('id')">ID <i class="bi bi-arrow-down-up sort-icon" id="sort-id"></i></th>
+                  <th onclick="sortLeads('nome')">Nome <i class="bi bi-arrow-down-up sort-icon" id="sort-nome"></i></th>
+                  <th onclick="sortLeads('nicho')">Nicho <i class="bi bi-arrow-down-up sort-icon" id="sort-nicho"></i></th>
+                  <th onclick="sortLeads('grupo')">Grupo <i class="bi bi-arrow-down-up sort-icon" id="sort-grupo"></i></th>
+                  <th style="width:60px;" onclick="sortLeads('score')">Score <i class="bi bi-arrow-down-up sort-icon" id="sort-score"></i></th>
+                  <th style="width:100px;" onclick="sortLeads('status')">Status <i class="bi bi-arrow-down-up sort-icon" id="sort-status"></i></th>
+                  <th style="width:50px;" onclick="sortLeads('gm_rating')">Rating <i class="bi bi-arrow-down-up sort-icon" id="sort-gm_rating"></i></th>
+                  <th style="width:60px;" onclick="sortLeads('gm_reviews')">Reviews <i class="bi bi-arrow-down-up sort-icon" id="sort-gm_reviews"></i></th>
+                  <th style="width:50px;">Site?</th>
+                  <th>WhatsApp</th>
+                  <th style="width:140px;">Ações</th>
+                </tr>
+              </thead>
+              <tbody id="leadsTable"></tbody>
+            </table>
+          </div>
+          <div id="emptyState" class="empty-state" style="display:none;">
+            <i class="bi bi-inbox"></i><h5>Nenhum lead encontrado</h5><p>Importe um CSV ou adicione leads manualmente.</p>
+            <button class="btn btn-primary mt-2" onclick="showView('import', document.querySelector('[onclick*=import]'))"><i class="bi bi-upload me-1"></i>Importar CSV</button>
+          </div>
+        </div>
+      </div>
+      <div class="d-flex justify-content-between align-items-center mt-3">
+        <span class="text-muted small" id="showingCount"></span>
+        <nav><ul class="pagination pagination-sm mb-0" id="pagination"></ul></nav>
+      </div>
+    </div>
+
+    <!-- PIPELINE -->
+    <div id="view-pipeline" class="view" style="display:none;">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h5 class="mb-0"><i class="bi bi-kanban me-2"></i>Pipeline de Vendas</h5>
+        <small class="text-muted"><i class="bi bi-info-circle me-1"></i>Arraste os cards entre as colunas para mudar o status</small>
+      </div>
+      <div class="row g-2" id="pipelineBoard"></div>
+    </div>
+
+    <!-- APPROACHES -->
+    <div id="view-approaches" class="view" style="display:none;">
+      <h5 class="mb-3"><i class="bi bi-send me-2"></i>Central de Abordagens</h5>
+      <div class="row g-3">
+        <div class="col-lg-4">
+          <div class="card h-100">
+            <div class="card-header" style="background:var(--primary);color:white;"><i class="bi bi-file-text me-2"></i>Templates de Abordagem</div>
+            <div class="card-body" style="max-height:600px;overflow-y:auto;" id="templatesList"></div>
+          </div>
+        </div>
+        <div class="col-lg-8">
+          <div class="card">
+            <div class="card-header" style="background:var(--accent);color:white;"><i class="bi bi-lightning me-2"></i>Ações Rápidas de Abordagem</div>
+            <div class="card-body">
+              <div class="row g-2 mb-3">
+                <div class="col-md-4">
+                  <select class="form-select form-select-sm" id="approachLeadSelect" onchange="loadApproachLead()">
+                    <option value="">Selecione um lead...</option>
+                  </select>
+                </div>
+                <div class="col-md-4">
+                  <select class="form-select form-select-sm" id="approachTemplateSelect" onchange="loadTemplate()">
+                    <option value="">Selecione um template...</option>
+                  </select>
+                </div>
+                <div class="col-md-4">
+                  <button class="btn btn-primary btn-sm w-100" onclick="applyApproach()"><i class="bi bi-check-lg me-1"></i>Aplicar Abordagem</button>
+                </div>
+              </div>
+              <div id="approachPreview" class="template-preview-box" style="display:none;"></div>
+              <div class="mt-3" id="approachActions" style="display:none;">
+                <div class="quick-action-bar">
+                  <button class="quick-action-btn wa" onclick="sendWhatsAppApproach()"><i class="bi bi-whatsapp"></i> Enviar WhatsApp</button>
+                  <button class="quick-action-btn copy" onclick="copyApproach()"><i class="bi bi-clipboard"></i> Copiar texto</button>
+                  <button class="quick-action-btn" onclick="markApproachSent()"><i class="bi bi-send"></i> Marcar como enviada</button>
+                  <button class="quick-action-btn" onclick="scheduleFollowup()"><i class="bi bi-calendar-plus"></i> Agendar Follow-up</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card mt-3">
+            <div class="card-header" style="background:var(--success);color:white;"><i class="bi bi-clock-history me-2"></i>Histórico de Abordagens (últimas 30)</div>
+            <div class="card-body" style="max-height:400px;overflow-y:auto;" id="approachHistory"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TEMPLATES -->
+    <div id="view-templates" class="view" style="display:none;">
+      <h5 class="mb-3"><i class="bi bi-file-text me-2"></i>Templates de Abordagem por Nicho</h5>
+      <p class="text-muted mb-3">Clique em "Aplicar ao lead sem site" para aplicar o template ao primeiro lead sem site do nicho correspondente.</p>
+      <div id="templatesList"></div>
+    </div>
+
+    <!-- DOCS -->
+    <div id="view-docs" class="view" style="display:none;">
+      <h5 class="mb-3"><i class="bi bi-file-earmark-text me-2"></i>Recursos & Documentos</h5>
+      <div class="row g-3 mb-4" id="docsList"></div>
+      <div id="docViewer" class="doc-viewer" style="display:none;">
+        <div class="doc-nav">
+          <button class="btn btn-sm btn-outline-primary" onclick="closeDoc()"><i class="bi bi-arrow-left me-1"></i>Voltar</button>
+          <button class="btn btn-sm btn-outline-secondary" onclick="copyDocContent()"><i class="bi bi-clipboard me-1"></i>Copiar</button>
+        </div>
+        <div id="docContent"></div>
+      </div>
+    </div>
+
+    <!-- BRANDKIT -->
+    <div id="view-brandkit" class="view" style="display:none;">
+      <h5 class="mb-3"><i class="bi bi-palette me-2"></i>BrandKit - Identidade Visual</h5>
+      <p class="text-muted mb-3">Extraia a identidade visual (paleta, logo, fotos) do Instagram de cada lead. Rode o brandkit (Python) e importe o brandkit.json aqui.</p>
+      <div class="row g-3 mb-4">
+        <div class="col-md-4">
+          <div class="card h-100">
+            <div class="card-header" style="background:var(--primary);color:white;"><i class="bi bi-terminal me-2"></i>Rodar BrandKit</div>
+            <div class="card-body">
+              <p class="small text-muted">Comando para extrair identidade visual de um lead:</p>
+              <div class="input-group input-group-sm mb-2">
+                <input type="text" class="form-control" id="bkHandle" placeholder="@handle ou URL do Instagram">
+              </div>
+              <div class="input-group input-group-sm mb-2">
+                <input type="text" class="form-control" id="bkSite" placeholder="site.com (opcional)">
+              </div>
+              <div class="form-check mb-2">
+                <input class="form-check-input" type="checkbox" id="bkDemo">
+                <label class="form-check-label small" for="bkDemo">Modo demo (offline, dados sintéticos)</label>
+              </div>
+              <button class="btn btn-primary w-100 mb-2" id="bkRunBtn" onclick="runBrandkit()"><i class="bi bi-play-fill me-1"></i>Rodar BrandKit</button>
+              <div id="bkProgressContainer" style="display:none;" class="mb-2">
+                <div class="progress" style="height:20px;">
+                  <div id="bkProgressBar" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width:0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
+                </div>
+              </div>
+              <div id="bkRunStatus" class="bg-light p-2 rounded small" style="display:none;"></div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card h-100">
+            <div class="card-header" style="background:var(--success);color:white;"><i class="bi bi-upload me-2"></i>Importar BrandKit</div>
+            <div class="card-body text-center">
+              <i class="bi bi-file-earmark-code" style="font-size:3rem;color:var(--success);"></i>
+              <p class="mt-2 small text-muted">Selecione o brandkit.json gerado pelo Python</p>
+              <input type="file" id="bkFileInput" accept=".json" style="display:none;" onchange="importBrandkitFile(event)">
+              <button class="btn btn-success btn-sm" onclick="document.getElementById('bkFileInput').click()"><i class="bi bi-upload me-1"></i>Selecionar JSON</button>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card h-100">
+            <div class="card-header" style="background:var(--accent);color:white;"><i class="bi bi-info-circle me-2"></i>Status</div>
+            <div class="card-body">
+              <div><strong>Kits importados:</strong> <span id="bkTotal">0</span></div>
+              <div><strong>Com paleta:</strong> <span id="bkWithPalette">0</span></div>
+              <div><strong>Com logo:</strong> <span id="bkWithLogo">0</span></div>
+              <div><strong>Com fotos:</strong> <span id="bkWithPhotos">0</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="brandkitList" class="row g-3"></div>
+    </div>
+    <!-- IMPORT -->
+    <div id="view-import" class="view" style="display:none;">
+      <h5 class="mb-3"><i class="bi bi-upload me-2"></i>Importar Leads (CSV)</h5>
+      <div class="row justify-content-center">
+        <div class="col-lg-8">
+          <div class="card">
+            <div class="card-body">
+              <div class="import-area" id="importArea" onclick="document.getElementById('fileInput').click()">
+                <i class="bi bi-cloud-arrow-up" style="font-size:3.5rem;color:var(--primary);"></i>
+                <h5 class="mt-3">Arraste um arquivo CSV aqui ou clique para selecionar</h5>
+                <p class="text-muted mb-0">Formato: Nome, Nicho, Grupo, Endereco, Telefone, WhatsApp, Website, Instagram, GM_Rating, GM_Reviews, Score, Status, Abordagem</p>
+                <input type="file" id="fileInput" accept=".csv" style="display:none;" onchange="handleFileSelect(event)">
+              </div>
+              <div id="importPreview" class="mt-4" style="display:none;">
+                <h6>Preview (primeiras 5 linhas):</h6>
+                <div class="table-responsive">
+                  <table class="table table-sm table-bordered" id="previewTable"></table>
+                </div>
+                <div class="d-flex justify-content-between align-items-center mt-3">
+                  <span class="text-muted" id="importCount"></span>
+                  <button class="btn btn-success" onclick="doImport()"><i class="bi bi-check-lg me-1"></i>Importar</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card mt-3">
+            <div class="card-header bg-secondary text-white"><i class="bi bi-info-circle me-2"></i>Formato do CSV</div>
+            <div class="card-body">
+              <p class="mb-2 small">Colunas esperadas (na ordem):</p>
+              <code class="small">Nome, Nicho, Grupo, Endereco, Telefone, WhatsApp, Website, Instagram, GM_Rating, GM_Reviews, Score, Status, Abordagem</code>
+              <p class="mt-3 mb-1 small"><strong>Score:</strong> A (alta), B (média), C (baixa)</p>
+              <p class="mb-1 small"><strong>Status:</strong> Novo, Contatado, Respondeu, Reunião, Proposta, Fechado, Perdido</p>
+              <p class="mb-0 small"><strong>Abordagem:</strong> Texto livre sobre a estratégia de abordagem para este lead</p>
+              <p class="mb-0 small"><strong>Tem Site:</strong> Filtrado automaticamente pelo campo Website</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- EXPORT -->
+    <div id="view-export" class="view" style="display:none;">
+      <h5 class="mb-3"><i class="bi bi-download me-2"></i>Exportar Leads</h5>
+      <div class="row justify-content-center">
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-body text-center py-5">
+              <i class="bi bi-file-earmark-spreadsheet" style="font-size:4rem;color:var(--success);"></i>
+              <h5 class="mt-3">Exportar todos os leads para CSV</h5>
+              <p class="text-muted">Inclui todos os campos + Abordagem + TemSite + Template</p>
+              <button class="btn btn-success btn-lg" onclick="doExport()"><i class="bi bi-download me-2"></i>Baixar CSV</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BACKUP -->
+    <div id="view-backup" class="view" style="display:none;">
+      <h5 class="mb-3"><i class="bi bi-shield-check me-2"></i>Backup e Restore</h5>
+      <div class="row justify-content-center g-3">
+        <div class="col-md-6">
+          <div class="card h-100">
+            <div class="card-header bg-primary text-white"><i class="bi bi-download me-2"></i>Backup (Exportar JSON)</div>
+            <div class="card-body text-center py-4">
+              <i class="bi bi-file-earmark-code" style="font-size:3rem;color:var(--primary);"></i>
+              <h6 class="mt-3">Exportar todos os dados (leads + notas) como JSON</h6>
+              <p class="text-muted small">Inclui leads, notas, configurações e histórico</p>
+              <button class="btn btn-primary" onclick="doBackup()"><i class="bi bi-download me-2"></i>Baixar Backup</button>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card h-100">
+            <div class="card-header bg-success text-white"><i class="bi bi-upload me-2"></i>Restore (Importar JSON)</div>
+            <div class="card-body text-center py-4">
+              <i class="bi bi-file-earmark-arrow-up" style="font-size:3rem;color:var(--success);"></i>
+              <h6 class="mt-3">Restaurar dados de um backup JSON</h6>
+              <p class="text-muted small">Substitui todos os dados atuais</p>
+              <input type="file" id="restoreInput" accept=".json" style="display:none;" onchange="doRestore(event)">
+              <button class="btn btn-success" onclick="document.getElementById('restoreInput').click()"><i class="bi bi-upload me-2"></i>Selecionar Backup</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row mt-3">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header bg-secondary text-white"><i class="bi bi-info-circle me-2"></i>Informações do Sistema</div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-3"><strong>Leads:</strong> <span id="infoLeads">0</span></div>
+                <div class="col-md-3"><strong>Notas:</strong> <span id="infoNotes">0</span></div>
+                <div class="col-md-3"><strong>Sem site:</strong> <span id="infoNoSite">0</span></div>
+                <div class="col-md-3"><strong>Com site:</strong> <span id="infoHasSite">0</span></div>
+              </div>
+              <div class="row mt-2">
+                <div class="col-md-4"><strong>Tema:</strong> <span id="infoTheme">Claro</span></div>
+                <div class="col-md-4"><strong>Versão:</strong> 7.0</div>
+                <div class="col-md-4"><strong>Último backup:</strong> <span id="infoBackup">Nunca</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FAB -->
+<button class="fab" onclick="openAddModal()" title="Novo Lead (Ctrl+N)"><i class="bi bi-plus-lg"></i></button>
+
+<!-- Lead Detail Modal -->
+<div class="modal fade" id="leadModal" tabindex="-1">
+  <div class="modal-dialog modal-lg modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalTitle">Detalhes do Lead</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body" id="modalBody"></div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+        <button type="button" class="btn btn-primary" onclick="saveLeadChanges()"><i class="bi bi-check-lg me-1"></i>Salvar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Add Lead Modal -->
+<div class="modal fade" id="addModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header"><h5 class="modal-title">Novo Lead</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
+      <div class="modal-body">
+        <div class="mb-3"><label class="form-label">Nome *</label><input type="text" class="form-control" id="addNome" required></div>
+        <div class="row">
+          <div class="col-md-6 mb-3"><label class="form-label">Nicho</label><input type="text" class="form-control" id="addNicho"></div>
+          <div class="col-md-6 mb-3"><label class="form-label">Grupo</label><input type="text" class="form-control" id="addGrupo"></div>
+        </div>
+        <div class="mb-3"><label class="form-label">Endereço</label><input type="text" class="form-control" id="addEndereco"></div>
+        <div class="row">
+          <div class="col-md-6 mb-3"><label class="form-label">Telefone</label><input type="text" class="form-control" id="addTelefone"></div>
+          <div class="col-md-6 mb-3"><label class="form-label">WhatsApp</label><input type="text" class="form-control" id="addWhatsapp"></div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 mb-3"><label class="form-label">Website</label><input type="text" class="form-control" id="addWebsite"></div>
+          <div class="col-md-6 mb-3"><label class="form-label">Instagram</label><input type="text" class="form-control" id="addInstagram"></div>
+        </div>
+        <div class="mb-3"><label class="form-label">Abordagem</label><textarea class="form-control" id="addAbordagem" rows="2" placeholder="Estratégia de abordagem..."></textarea></div>
+        <div class="row">
+          <div class="col-md-4 mb-3"><label class="form-label">Score</label><select class="form-select" id="addScore"><option value="A">A - Alta</option><option value="B" selected>B - Média</option><option value="C">C - Baixa</option></select></div>
+          <div class="col-md-4 mb-3"><label class="form-label">Status</label><select class="form-select" id="addStatus"><option value="Novo" selected>Novo</option><option value="Contatado">Contatado</option><option value="Respondeu">Respondeu</option><option value="Reunião">Reunião</option><option value="Proposta">Proposta</option><option value="Fechado">Fechado</option><option value="Perdido">Perdido</option></select></div>
+          <div class="col-md-4 mb-3"><label class="form-label">GM Rating</label><input type="number" step="0.1" min="0" max="5" class="form-control" id="addRating"></div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary" onclick="addLead()"><i class="bi bi-check-lg me-1"></i>Adicionar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Templates Modal -->
+<div class="modal fade" id="templatesModal" tabindex="-1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header" style="background:linear-gradient(135deg,var(--accent),var(--accent-dark));">
+        <h5 class="modal-title">Templates de Abordagem</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body" id="templatesModalBody"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Shortcuts Modal -->
+<div class="modal fade" id="shortcutsModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header"><h5 class="modal-title"><i class="bi bi-keyboard me-2"></i>Atalhos de Teclado</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
+      <div class="modal-body shortcuts-modal">
+        <div class="row g-2">
+          <div class="col-6"><kbd>Ctrl+N</kbd> Novo lead</div>
+          <div class="col-6"><kbd>Ctrl+F</kbd> Buscar</div>
+          <div class="col-6"><kbd>Ctrl+S</kbd> Salvar</div>
+          <div class="col-6"><kbd>Esc</kbd> Fechar modal</div>
+          <div class="col-6"><kbd>Ctrl+D</kbd> Dashboard</div>
+          <div class="col-6"><kbd>Ctrl+L</kbd> Leads</div>
+          <div class="col-6"><kbd>Ctrl+P</kbd> Pipeline</div>
+          <div class="col-6"><kbd>Ctrl+A</kbd> Abordagens</div>
+          <div class="col-6"><kbd>Ctrl+E</kbd> Exportar</div>
+          <div class="col-6"><kbd>Ctrl+T</kbd> Alternar tema</div>
+          <div class="col-6"><kbd>Ctrl+Shift+S</kbd> Filtro Sem site</div>
+          <div class="col-6"><kbd>Ctrl+Shift+C</kbd> Filtro Com site</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Toast Container -->
+<div class="toast-container"></div>
+
+<!-- SCRIPTS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="crm.js"></script>
+<script src="crm-clone.js"></script>
+</body>
+</html>
